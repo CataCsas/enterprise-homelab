@@ -18,10 +18,10 @@ The topology prioritizes visibility, segmentation, and operational clarity over 
 [ Cisco Catalyst 3560CX ]
    (Layer 3 Switching)
         |
--------------------------------------------------
-|        |        |        |        |            |
-Mgmt   Security  Users   Printers   IoT       Guest
-VLAN10  VLAN20   VLAN50  VLAN30    VLAN40    VLAN60
+------------------------------------------------------
+  |        |        |        |        |            |
+Mgmt   Security  Printers   IoT   Users_Trust    Guest
+VLAN10  VLAN20    VLAN30   VLAN40    VLAN50     VLAN60
 ```
 
 - The pfSense appliance acts as the **edge firewall and internet gateway**.
