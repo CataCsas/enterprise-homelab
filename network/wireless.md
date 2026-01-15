@@ -25,7 +25,8 @@ This document outlines the wireless network design for the **enterprise-homelab*
   - **VLAN 50 – Users_Trust**  
   - **VLAN 60 – Guest**  
 - Each SSID will map to its respective VLAN for proper segmentation.  
-- DHCP and inter-VLAN routing will remain centralized on the Cisco L3 switch.
+- DHCP and inter-VLAN routing will remain centralized on the Cisco L3 switch.  
+- Future monitoring will include **internal (east-west) traffic between VLANs** to detect unexpected communications and support SOC-relevant observability.
 
 > Notes:  
 > - This upgrade enables isolation of IoT, user, and guest devices.  
