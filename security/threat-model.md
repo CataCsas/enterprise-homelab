@@ -8,6 +8,7 @@ This document outlines potential security threats to the **enterprise-homelab** 
 
 - Covers internal VLANs, critical infrastructure, and wireless endpoints.  
 - Focuses on risks relevant to the lab environment, including misconfigurations, unauthorized access, and exposure to the internet.  
+- Future monitoring will include internal (east-west) traffic between VLANs to detect unexpected communications.
 
 ---
 
