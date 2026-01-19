@@ -41,7 +41,8 @@ This document outlines the process for managing changes within the **enterprise-
 
 | Date       | Change Description                     | Affected Components | Outcome |
 |-----------|----------------------------------------|------------------|---------|
-| YYYY-MM-DD | Example: Added VLAN 40 for IoT devices | Cisco switch      | Verified connectivity and SIEM logging |
+| 2026-01-19 | Console access and pre-change validation | Cisco switch | Verified USB console, IOS version, licensing, VLANs, and interface usage; observed expected PnP messages and lag during session |
+| 2026-01-19 | VLAN 30 creation and port assignment | Cisco switch | VLAN 30 Printers created; Gi0/7 and Gi0/8 assigned; verified with 'show vlan brief' and 'show interfaces status'; console lag persisted |
 
 > Notes:  
 > - Tracking ensures reproducibility and supports troubleshooting.  
