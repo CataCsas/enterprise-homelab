@@ -1,76 +1,67 @@
 # IP Addressing
 
-This document defines the IP addressing scheme for the **enterprise-homelab** environment. The goal is to assign addresses consistently, minimize conflicts, and clearly distinguish between VLANs, static devices, and DHCP clients.
+This document defines the IP addressing approach for the **enterprise-homelab** environment. It focuses on VLAN segmentation, static vs. dynamic assignments, and centralized DHCP management.
 
 ---
 
 ## Addressing Principles
 
-- **Static IPs** are assigned to critical infrastructure:
-  - Edge firewall (pfSense)
-  - Core switch (Cisco Catalyst 3560CX)
-- **Reserved IPs** are allocated for essential devices:
-  - SIEM host
-  - Network printers
-- **DHCP** is used for IoT devices, general user endpoints, and guest devices.
-- **Address ranges** are segmented per VLAN for clarity and manageability.
-- IP assignments are documented to maintain reproducibility and facilitate troubleshooting.
+- **Static IPs** are reserved for critical infrastructure and administrative devices:
+  - Edge firewall / gateway
+  - Core switch
+  - Security monitoring host (SIEM)
+- **DHCP** is used for general user devices, IoT devices, and guest endpoints.
+- Each VLAN has a distinct subnet to simplify management, troubleshooting, and segmentation.
+- Documented addressing ensures reproducibility and professional operational standards.
 
 ---
 
 ## VLAN Addressing Overview
 
-| VLAN ID | Name         | Subnet           | Notes |
-|--------:|--------------|-----------------|-------|
-| 10      | Mgmt         | 192.168.10.0/24 | Static IPs for firewall, switch, and administrative devices |
-| 20      | Security     | 192.168.20.0/24 | Reserved IPs for SIEM host; DHCP optional for security lab endpoints |
-| 30      | Printers     | 192.168.30.0/24 | Reserved IPs for printers |
-| 40      | IoT          | 192.168.40.0/24 | DHCP for IoT devices |
-| 50      | Users_Trust  | 192.168.50.0/24 | DHCP for trusted users and temporary wireless devices |
-| 60      | Guest        | 192.168.60.0/24 | DHCP for guest devices, internet-only access |
+| VLAN ID | Name         | Purpose |
+|--------:|--------------|---------|
+| 10      | Mgmt         | Management and core infrastructure |
+| 20      | Security     | Security monitoring hosts and tools |
+| 30      | Printers     | Network printers |
+| 40      | IoT          | IoT and embedded devices |
+| 50      | Users_Trust  | Trusted user endpoints, including wireless devices |
+| 60      | Guest        | Guest devices with internet-only access |
 
 ---
 
 ## Static IP Assignments
 
-| Device                      | VLAN   | IP Address     | Purpose |
-|------------------------------|--------|---------------|---------|
-| Netgate SG-2100 (LAN1)       | Mgmt   | 192.168.10.1  | Gateway / firewall |
-| Cisco Catalyst 3560CX (Mgmt) | Mgmt   | 192.168.10.2  | Switch management / VLAN enforcement |
+Critical devices receive static IPs within their VLAN subnet, including:
 
-> Notes:
-> - Static addresses are documented to prevent conflicts.
-> - inter-VLAN routing is handled by pfSense.
+- Edge firewall / gateway
+- Core switch management interface
+- Security monitoring host and network printers
 
----
-
-## DHCP (pfSense)
-
-DHCP is now centrally managed by pfSense for all VLANs:
-
-- Each VLAN has a defined **DHCP pool** within its subnet.
-- DHCP reservations are used for predictable IP assignment:
-  - Printers
-  - SIEM host
-- General users, IoT devices, and guest devices receive dynamic addresses from their VLAN pool.
+Static assignments ensure consistent connectivity and predictable routing within the lab.
 
 ---
 
-## DHCP Reservations
+## DHCP Management
 
-| Device                      | VLAN   | Reserved IP   | Purpose |
-|------------------------------|--------|---------------|---------|
-| Linux SIEM Notebook           | Security | 192.168.20.10 | Monitoring and log aggregation |
-| Brother HL-2280DW Printer     | Printers | 192.168.30.10 | Network printing |
-| Brother HL-3170CDW Printer    | Printers | 192.168.30.11 | Network printing |
+- DHCP is centrally managed by pfSense for all VLANs.
+- Each VLAN has a defined DHCP pool for dynamic client addressing.
+- Certain devices (printers, monitoring hosts) use DHCP reservations to maintain predictable addresses.
+
+---
+
+## Best Practices
+
+- **Segmentation first**: VLANs separate device roles and trust levels.
+- **Static vs. dynamic**: Reserve static IPs for infrastructure; use DHCP for general endpoints.
+- **Centralized management**: pfSense handles all DHCP and routing, ensuring visibility and control.
+- **Document internally**: Keep detailed IP assignments and reservations in internal lab records.
 
 ---
 
 ## Summary
 
-- VLAN segmentation simplifies troubleshooting and enforces security boundaries.
-- Static addresses are reserved for critical infrastructure and administrative devices.
-- pfSense centrally manages DHCP for all VLANs, replacing the switch-based service.
-- Documented addressing ensures reproducibility and clarity for future lab expansions.
+- VLAN-based addressing improves clarity, security, and troubleshooting.
+- Static IPs are used for infrastructure and critical devices; other endpoints are dynamically assigned.
+- The structure supports lab growth, experimentation, and professional practices.
 
 ---
