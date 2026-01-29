@@ -10,8 +10,8 @@ The lab simulates real-world enterprise infrastructure with an emphasis on clear
 
 The environment is built using:
 
-- **pfSense** as the edge firewall and perimeter control
-- **Cisco Catalyst L3 switching** for inter-VLAN routing
+- **pfSense** as the edge firewall, inter-VLAN router, and perimeter control
+- **Cisco Catalyst switching** for VLAN segmentation, trunking, and access-layer enforcement
 - **VLAN-based segmentation** to separate users, infrastructure, IoT, and guest traffic
 - A **Linux-based SIEM platform** for centralized logging and analysis
 
@@ -65,3 +65,4 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 
 The lab is actively maintained and expanded as components are deployed and validated.  
 Documentation is updated alongside infrastructure changes to reflect the current state of the environment.
+
