@@ -12,7 +12,7 @@ This document defines the IP addressing scheme for the **enterprise-homelab** en
 - **Reserved IPs** are allocated for essential devices:
   - SIEM host
   - Network printers
-- **DHCP** is used for IoT devices, general user endpoints and guest devices.
+- **DHCP** is used for IoT devices, general user endpoints, and guest devices.
 - **Address ranges** are segmented per VLAN for clarity and manageability.
 - IP assignments are documented to maintain reproducibility and facilitate troubleshooting.
 
@@ -22,8 +22,8 @@ This document defines the IP addressing scheme for the **enterprise-homelab** en
 
 | VLAN ID | Name         | Subnet           | Notes |
 |--------:|--------------|-----------------|-------|
-| 10      | Mgmt         | 192.168.10.0/24 | Static IPs for firewall, switch, admin devices |
-| 20      | Security     | 192.168.20.0/24 | Reserved IPs for SIEM host |
+| 10      | Mgmt         | 192.168.10.0/24 | Static IPs for firewall, switch, and administrative devices |
+| 20      | Security     | 192.168.20.0/24 | Reserved IPs for SIEM host; DHCP optional for security lab endpoints |
 | 30      | Printers     | 192.168.30.0/24 | Reserved IPs for printers |
 | 40      | IoT          | 192.168.40.0/24 | DHCP for IoT devices |
 | 50      | Users_Trust  | 192.168.50.0/24 | DHCP for trusted users and temporary wireless devices |
@@ -36,16 +36,27 @@ This document defines the IP addressing scheme for the **enterprise-homelab** en
 | Device                      | VLAN   | IP Address     | Purpose |
 |------------------------------|--------|---------------|---------|
 | Netgate SG-2100 (LAN1)       | Mgmt   | 192.168.10.1  | Gateway / firewall |
-| Cisco Catalyst 3560CX (Mgmt) | Mgmt   | 192.168.10.2  | Layer 3 SVI / switch management |
+| Cisco Catalyst 3560CX (Mgmt) | Mgmt   | 192.168.10.2  | Switch management / VLAN enforcement |
 
 > Notes:
 > - Static addresses are documented to prevent conflicts.
+> - inter-VLAN routing is handled by pfSense.
+
+---
+
+## DHCP (pfSense)
+
+DHCP is now centrally managed by pfSense for all VLANs:
+
+- Each VLAN has a defined **DHCP pool** within its subnet.
+- DHCP reservations are used for predictable IP assignment:
+  - Printers
+  - SIEM host
+- General users, IoT devices, and guest devices receive dynamic addresses from their VLAN pool.
 
 ---
 
 ## DHCP Reservations
-
-Certain devices require predictable IP addresses. These are assigned as **reservations in DHCP**:
 
 | Device                      | VLAN   | Reserved IP   | Purpose |
 |------------------------------|--------|---------------|---------|
@@ -55,22 +66,11 @@ Certain devices require predictable IP addresses. These are assigned as **reserv
 
 ---
 
-## DHCP Considerations
-
-- DHCP is provided by the Cisco switch.
-- Each VLAN has a defined **DHCP pool** within its subnet.
-- DHCP reservations are used for predictable IP assignment:
-  - Printers
-  - SIEM host
-- General users, IoT devices, and guest devices receive dynamic addresses from their VLAN pool.
-
----
-
 ## Summary
 
-- Clear segmentation per VLAN simplifies troubleshooting.
-- Static addresses are reserved for infrastructure and critical endpoints.
-- DHCP handles all general client devices.
+- VLAN segmentation simplifies troubleshooting and enforces security boundaries.
+- Static addresses are reserved for critical infrastructure and administrative devices.
+- pfSense centrally manages DHCP for all VLANs, replacing the switch-based service.
 - Documented addressing ensures reproducibility and clarity for future lab expansions.
 
 ---
