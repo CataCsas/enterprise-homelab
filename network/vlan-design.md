@@ -17,6 +17,8 @@ The design prioritizes clear separation between management, security infrastruct
 | 50      | Users_Trust  | Trusted user endpoints |
 | 60      | Guest        | Guest and internet-only access |
 
+> Notes: VLANs exist on the Cisco switch to **enforce segmentation and isolate traffic**. Inter-VLAN routing and DHCP are handled centrally by pfSense.
+
 ---
 
 ## VLAN Definitions
@@ -28,12 +30,13 @@ Provides isolated access to network infrastructure management interfaces.
 
 **Typical devices:**
 - Netgate SG-2100 (management interface)
-- Cisco Catalyst 3560CX (management SVI)
-- Administrative access endpoints (when required)
+- Cisco Catalyst 3560CX (L2 enforcement and monitoring connectivity)
+- Administrative endpoints (as needed)
 
 **Notes:**
-- Not used for general user traffic
+- No general user traffic allowed
 - Restricted access by design
+- ACLs applied to control internal access
 
 ---
 
@@ -48,7 +51,8 @@ Hosts security monitoring and analysis systems.
 
 **Notes:**
 - Receives logs and telemetry from other VLANs
-- No direct exposure to guest or IoT networks
+- Isolated from Guest and IoT VLANs
+- pfSense provides routing and default gateway
 
 ---
 
@@ -62,8 +66,9 @@ Isolates network printers from user and management segments.
 - Brother HL-3170CDW
 
 **Notes:**
-- Access permitted from selected internal VLANs as required
+- Accessible from selected VLANs based on operational needs
 - No outbound access beyond required services
+- ACLs on the switch enforce allowed communication
 
 ---
 
@@ -79,7 +84,8 @@ Contains IoT and embedded devices with limited trust.
 
 **Notes:**
 - Restricted east-west communication
-- Internet access constrained by policy
+- Internet access controlled by pfSense firewall
+- ACLs applied on the switch for internal segmentation
 
 ---
 
@@ -95,7 +101,8 @@ Primary VLAN for trusted user endpoints.
 
 **Notes:**
 - Temporary consolidation of wireless endpoints
-- Future separation planned once VLAN-aware wireless infrastructure is deployed
+- Future separation planned with VLAN-aware wireless APs
+- pfSense provides DHCP and default gateway
 
 ---
 
@@ -109,16 +116,17 @@ Provides isolated, internet-only access for guest devices.
 
 **Notes:**
 - No access to internal VLANs
-- Strictly controlled routing and firewall policies
+- Strictly controlled routing and firewall policies via pfSense
+- ACLs on switch prevent unauthorized east-west traffic
 
 ---
 
 ## Inter-VLAN Considerations
 
-- Inter-VLAN routing is performed at the Layer 3 switch
-- Default gateway for each VLAN is provided by an SVI
-- Access between VLANs is explicitly controlled
+- **Routing and default gateways are handled by pfSense**.  
+- Cisco switch enforces VLAN segregation and ACL-based policy control.  
+- Access between VLANs is explicitly controlled and monitored.  
 
-Detailed access policies are defined outside the scope of this document.
+> Notes: Detailed access policies are documented separately in firewall rules and SIEM monitoring scope.
 
 ---
