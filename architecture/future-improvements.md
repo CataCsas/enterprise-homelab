@@ -19,7 +19,7 @@ Planned enhancements include:
 Incident response workflows will be periodically exercised to validate detection and containment processes:
 
 - Simulate a misbehaving IoT device or policy violation.  
-- Practice alert triage, scope determination, and containment actions, such as VLAN isolation or ACL updates.  
+- Practice alert analysis, scope determination, and containment actions, such as firewall rule changes or VLAN-based isolation.  
 - Document findings and lessons learned to improve reproducibility and visibility.
 
 ---
