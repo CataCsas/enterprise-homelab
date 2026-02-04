@@ -1,6 +1,8 @@
 # Future Improvements
 
-This document outlines planned enhancements to the **enterprise-homelab** environment. The focus is on improving detection, monitoring, and incident response capabilities in a structured, practical way.
+This document outlines planned enhancements to the **enterprise-homelab** environment. The focus is on expanding detection, visibility, and incident response capabilities in a controlled and repeatable manner.
+
+All future work builds on an established foundation of VLAN segmentation, centralized routing, and explicit inter-VLAN firewall policy enforcement.
 
 ---
 
@@ -8,60 +10,75 @@ This document outlines planned enhancements to the **enterprise-homelab** enviro
 
 Planned enhancements include:
 
-- Adding **custom SIEM rules** for relevant events, such as authentication failures and unauthorized access attempts.  
-- Refining alerts to ensure they are actionable and reduce noise.  
-- Expanding coverage to include additional endpoints as VLAN separation and new devices are introduced.
+- Expanding **SIEM coverage** as additional devices and VLANs are activated.  
+- Developing **custom detection rules** for events such as authentication failures, policy violations, and unexpected network behavior.  
+- Refining alert logic to prioritize actionable events and reduce noise.  
+- Validating log completeness and consistency across infrastructure components.
+
+---
+
+## Network Traffic Inspection
+
+Future work will introduce deeper traffic visibility:
+
+- Enable and tune **IDS/IPS capabilities** (e.g., Suricata) at the firewall.  
+- Monitor selected east–west traffic paths for unexpected protocols or destinations.  
+- Validate IDS alerts and firewall denies through SIEM ingestion and analysis.  
+
+Inspection will be introduced incrementally to avoid unnecessary performance or alerting overhead.
 
 ---
 
 ## Incident Response Practice
 
-Incident response workflows will be periodically exercised to validate detection and containment processes:
+Incident response workflows will be exercised to validate detection and containment:
 
-- Simulate a misbehaving IoT device or policy violation.  
-- Practice alert analysis, scope determination, and containment actions, such as firewall rule changes or VLAN-based isolation.  
-- Document findings and lessons learned to improve reproducibility and visibility.
-
----
-
-## Identity & Access
-
-Future improvements will strengthen access controls:
-
-- Implement **MFA using hardware security keys** for administrative accounts.  
-- Separate administrative and non-privileged accounts.  
-- Log and review privileged actions where possible.
+- Simulate policy violations or misbehaving endpoints (e.g., IoT or user devices).  
+- Practice alert triage, scope assessment, and containment actions such as firewall rule adjustments or VLAN isolation.  
+- Document outcomes and lessons learned to improve repeatability and response quality.
 
 ---
 
-## Internal Traffic Visibility
+## Identity & Access Controls
 
-Plans include improving visibility into inter-VLAN communications:
+Future improvements will strengthen administrative access security:
 
-- Monitor unexpected communication paths and protocol usage between VLANs.  
-- Log denied access attempts for analysis and review to support detection of lateral movement.
+- Implement **multi-factor authentication** for administrative interfaces where supported.  
+- Enforce separation between administrative and non-privileged accounts.  
+- Increase visibility into privileged actions through logging and review.
+
+---
+
+## Wireless Segmentation Expansion
+
+Once VLAN-aware access points are deployed:
+
+- Activate **VLAN 40 (IoT)** and **VLAN 60 (Guest)** with pre-defined firewall policies.  
+- Separate SSIDs by trust level and function.  
+- Validate isolation and access restrictions through testing and monitoring.
 
 ---
 
 ## Configuration & Change Management
 
-To maintain clarity and reproducibility:
+To preserve stability and clarity:
 
-- Track firewall and switch configuration changes.  
-- Periodically review VLAN and access rules.  
-- Update documentation alongside infrastructure changes.
+- Continue tracking firewall, switch, and SIEM configuration changes.  
+- Periodically review segmentation and access rules for correctness and drift.  
+- Update documentation alongside infrastructure changes to reflect current state.
 
 ---
 
 ## Summary
 
-The planned improvements focus on:
+Planned improvements focus on:
 
-- Strengthening monitoring and detection, including **alert tuning and coverage validation**.  
-- Practicing **incident response** and verifying **inter-VLAN visibility**.  
-- Improving access control and internal segmentation.  
-- Maintaining documentation and **change tracking** for reproducibility.
+- Expanding detection and monitoring in a controlled, SOC-aligned manner.  
+- Introducing traffic inspection and validating east–west visibility.  
+- Practicing incident response using realistic scenarios.  
+- Strengthening identity controls and wireless segmentation.  
+- Maintaining disciplined documentation and change tracking.
 
-These steps reflect a structured, security-focused approach consistent with learning and operational practice in a SOC-like environment.
+These enhancements reflect a deliberate progression from **secure architecture** to **operational security practice**.
 
 ---
