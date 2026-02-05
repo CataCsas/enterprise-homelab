@@ -17,7 +17,7 @@ The design prioritizes clear separation between management, security infrastruct
 | 50      | Users_Trust  | Trusted user endpoints |
 | 60      | Guest        | Guest and internet-only access |
 
-> Notes: VLANs exist on the Cisco switch to **enforce segmentation and isolate traffic**. Inter-VLAN routing and DHCP are handled centrally by pfSense.
+> VLANs are defined on the Cisco switch to **enforce segmentation and isolate traffic**. Inter-VLAN routing and DHCP are handled centrally by pfSense.
 
 ---
 
@@ -30,13 +30,13 @@ Provides isolated access to network infrastructure management interfaces.
 
 **Typical devices:**
 - Netgate SG-2100 (management interface)
-- Cisco Catalyst 3560CX (L2 enforcement and monitoring connectivity)
-- Administrative endpoints (as needed)
+- Cisco Catalyst 3560CX
+- Administrative endpoints (restricted)
 
 **Notes:**
-- No general user traffic allowed
-- Restricted access by design
-- ACLs applied to control internal access
+- No general user traffic permitted
+- Access tightly controlled
+- Internal access governed by firewall rules and switch ACLs
 
 ---
 
@@ -47,12 +47,12 @@ Hosts security monitoring and analysis systems.
 
 **Typical devices:**
 - Linux-based SIEM host
-- Future security tooling or analysis systems
+- Future security tooling
 
 **Notes:**
 - Receives logs and telemetry from other VLANs
-- Isolated from Guest and IoT VLANs
-- pfSense provides routing and default gateway
+- Isolated from Guest and IoT networks
+- Routing and default gateway provided by pfSense
 
 ---
 
@@ -66,9 +66,9 @@ Isolates network printers from user and management segments.
 - Brother HL-3170CDW
 
 **Notes:**
-- Accessible from selected VLANs based on operational needs
-- No outbound access beyond required services
-- ACLs on the switch enforce allowed communication
+- Access permitted only from explicitly authorized VLANs
+- Outbound access restricted to required services
+- Policy enforced via firewall rules and switch ACLs
 
 ---
 
@@ -83,9 +83,9 @@ Contains IoT and embedded devices with limited trust.
 - Consumer IoT appliances
 
 **Notes:**
-- Restricted east-west communication
-- Internet access controlled by pfSense firewall
-- ACLs applied on the switch for internal segmentation
+- VLAN is defined and secured
+- Currently inactive pending VLAN-aware wireless deployment
+- Internet access and lateral movement tightly restricted by design
 
 ---
 
@@ -100,9 +100,9 @@ Primary VLAN for trusted user endpoints.
 - Tablets and e-readers
 
 **Notes:**
-- Temporary consolidation of wireless endpoints
-- Future separation planned with VLAN-aware wireless APs
-- pfSense provides DHCP and default gateway
+- Wired and wireless user endpoints currently reside here
+- Wireless consolidation reflects access point limitations, not design intent
+- Full separation planned with enterprise-grade VLAN-aware APs
 
 ---
 
@@ -112,21 +112,21 @@ Primary VLAN for trusted user endpoints.
 Provides isolated, internet-only access for guest devices.
 
 **Typical devices:**
-- Visitor laptops and phones
+- Visitor laptops and mobile devices
 
 **Notes:**
-- No access to internal VLANs
-- Strictly controlled routing and firewall policies via pfSense
-- ACLs on switch prevent unauthorized east-west traffic
+- VLAN is defined and pre-secured
+- No access to internal networks
+- Activated only when dedicated guest wireless is deployed
 
 ---
 
 ## Inter-VLAN Considerations
 
-- **Routing and default gateways are handled by pfSense**.  
-- Cisco switch enforces VLAN segregation and ACL-based policy control.  
-- Access between VLANs is explicitly controlled and monitored.  
+- **pfSense performs all inter-VLAN routing and gateway services**
+- Cisco switch enforces VLAN boundaries and supplemental ACLs
+- All inter-VLAN access is explicit, controlled, and logged where applicable
 
-> Notes: Detailed access policies are documented separately in firewall rules and SIEM monitoring scope.
+> Detailed firewall policies and monitoring scope are documented separately.
 
 ---
