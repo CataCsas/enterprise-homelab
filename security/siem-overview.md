@@ -1,51 +1,84 @@
 # SIEM Overview
 
-This document provides an overview of the Security Information and Event Management (SIEM) deployment within the **enterprise-homelab** environment, including core components, monitoring scope, and rationale.
+This document provides an overview of the Security Information and Event Management (SIEM) deployment within the **enterprise-homelab** environment. It describes the platform, log sources, monitoring scope, and the rationale behind a selective, infrastructure-focused approach.
 
 ---
 
 ## SIEM Platform
 
-- Deployed on a **Linux Mint XFCE host** for lightweight, reliable performance.  
-- **Wazuh** serves as the central point for collecting, analyzing, and alerting on system and network events.  
-- Host-based monitoring includes system events, service status, and predefined anomaly alerts.  
+- Deployed on a **Linux Mint XFCE host** for lightweight and stable operation.  
+- **Wazuh** is used for centralized log collection, analysis, and alerting.  
+- Host-based monitoring applies only to the SIEM system itself and includes:
+  - System and service events
+  - Agent health and integrity
+  - Predefined anomaly detection
 
-> Notes: The SIEM host is isolated in the **Security VLAN (VLAN 20)** to prevent unnecessary exposure to user or guest networks.
-
----
-
-## Log Collection
-
-Critical devices forward logs to the SIEM host:
-
-| Device / System             | VLAN         | Log Type / Purpose |
-|------------------------------|-------------|------------------|
-| Netgate SG-2100 (pfSense)    | Mgmt        | Firewall events, NAT, VPN activity, VLAN-based routing events |
-| Cisco Catalyst 3560CX        | Mgmt        | VLAN enforcement, ACL events, operational switch logs |
-| Network Printers             | Printers    | Operational and status logs (SNMP currently disabled) |
-
-> Notes: Only relevant events are collected, prioritizing **critical infrastructure**. Cisco logs focus on VLAN enforcement and ACL activity rather than routing.
+The SIEM host is isolated in **VLAN 20 – Security** to reduce exposure and align with enterprise SOC architectures.
 
 ---
 
-## Monitoring Scope
+## Log Collection Sources
 
-- VLAN-based collection ensures relevant coverage:  
-  - **VLAN 10 – Mgmt:** firewall and switch operational events  
-  - **VLAN 20 – Security:** SIEM host system events and alerts  
-  - **VLAN 30 – Printers:** operational and status logs  
-  - **VLAN 40 – IoT:** planned monitoring after VLAN-aware AP deployment  
-  - **VLAN 50 – Users_Trust:** limited monitoring for troubleshooting or anomaly detection  
-  - **VLAN 60 – Guest:** basic connectivity and firewall events  
+The SIEM ingests logs from critical infrastructure components:
 
-> Notes: This scope balances **visibility** with **privacy and relevance**. Future expansions will include IoT devices and user endpoints once VLAN separation and wireless upgrades are implemented.
+| Device / System           | VLAN      | Log Type / Purpose |
+|---------------------------|-----------|-------------------|
+| Netgate SG-2100 (pfSense) | Mgmt      | Firewall allow/deny events, inter-VLAN policy enforcement, routing decisions |
+| Cisco Catalyst 3560CX     | Mgmt      | VLAN enforcement, ACL activity, switch operational logs |
+| Network Printers          | Printers  | Limited operational and status events |
+
+**Notes:**
+- Logging is **explicit and selective**, not blanket-enabled.
+- Cisco switch logs focus on **segmentation and access control**, not routing.
+- SNMP is currently disabled on printers; logging is minimal by design.
+
+---
+
+## Monitoring Scope by VLAN
+
+- **VLAN 10 – Mgmt**  
+  Firewall and switch control-plane events, administrative access activity.
+
+- **VLAN 20 – Security**  
+  SIEM host logs, agent status, and alerting activity.
+
+- **VLAN 30 – Printers**  
+  Basic availability and policy-compliance visibility.
+
+- **VLAN 40 – IoT**  
+  Defined and secured, but **not currently active**. No log sources present.
+
+- **VLAN 50 – Users_Trust**  
+  No endpoint-level monitoring. Visibility limited to:
+  - Firewall enforcement events
+  - DHCP activity
+  - Anomalous or policy-violating traffic patterns
+
+- **VLAN 60 – Guest**  
+  Defined and secured, but **not currently active**. Once enabled, visibility will be limited to firewall enforcement only.
+
+This scope balances **security visibility, performance, and privacy**, reflecting common enterprise SOC practices.
+
+---
+
+## Design Rationale
+
+- Prioritize **infrastructure and control-plane visibility**.
+- Avoid excessive endpoint logging that produces noise without actionable value.
+- Ensure all monitored events clearly map to:
+  - Segmentation enforcement
+  - Access control decisions
+  - Policy violations
+
+Logging scope expands only when it provides measurable operational or security benefit.
 
 ---
 
 ## Summary
 
-- Wazuh provides centralized log collection, analysis, and alerting for **critical infrastructure and selected endpoints**.  
-- VLAN-based monitoring supports focused observability while maintaining operational privacy.  
-- The SIEM deployment is expandable to include additional devices and VLANs as the lab evolves.
+- Wazuh provides centralized visibility into **critical network and security infrastructure**.
+- Monitoring is VLAN-aware and intentionally selective.
+- User, IoT, and Guest monitoring is limited or deferred by design.
+- The SIEM architecture supports future expansion without requiring redesign.
 
 ---
