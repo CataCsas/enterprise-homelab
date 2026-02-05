@@ -26,9 +26,9 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 | 10      | Mgmt         | Network management (firewall, switch, admin devices) |
 | 20      | Security     | SIEM and security tooling |
 | 30      | Printers     | Network printers |
-| 40      | IoT          | Cameras, smart devices |
-| 50      | Users_Trust  | Trusted user devices / Wi-Fi |
-| 60      | Guest        | Guest Wi-Fi / internet-only access |
+| 40      | IoT          | Cameras, smart devices (pre-secured, inactive) |
+| 50      | Users_Trust  | Trusted user devices / temporary Wi-Fi endpoints |
+| 60      | Guest        | Guest Wi-Fi / internet-only access (pre-secured, inactive) |
 
 > Notes: VLANs exist on the switch to **enforce segmentation and isolate traffic**. Trunks carry all VLANs between the switch and pfSense.  
 
@@ -38,9 +38,9 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 
 - Inter-VLAN routing is handled by **pfSense**, not the Cisco switch.  
 - pfSense interfaces provide **default gateways** for each VLAN.  
-- Cisco enforces **access policies** using ACLs where necessary for extra internal control.  
+- Cisco enforces **access policies** using ACLs for additional internal control.  
 
-> Rationale: Centralizing routing and DHCP on pfSense avoids configuration conflicts and ensures consistent monitoring and security enforcement.
+> Rationale: Centralizing routing and DHCP on pfSense avoids configuration conflicts and ensures consistent monitoring, security enforcement, and alignment with SOC workflows.
 
 ---
 
@@ -49,11 +49,11 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 - **Mgmt VLAN (10):** Only administrative devices have access.  
 - **Security VLAN (20):** Isolated for monitoring infrastructure; receives logs and alerts.  
 - **Printers VLAN (30):** Accessible from authorized VLANs as needed.  
-- **IoT VLAN (40):** Restricted lateral movement; limited access to sensitive VLANs.  
+- **IoT VLAN (40):** Restricted lateral movement; limited access to sensitive VLANs; pre-secured.  
 - **Users_Trust VLAN (50):** General user traffic; temporary wireless endpoints are placed here.  
-- **Guest VLAN (60):** Internet-only access; no access to internal VLANs.
+- **Guest VLAN (60):** Internet-only access; no access to internal VLANs; pre-secured.  
 
-> Notes: ACLs on the switch are applied for additional segmentation and will be updated as wireless VLAN separation is implemented.
+> Notes: ACLs on the switch complement pfSense firewall rules and will support VLAN-aware wireless separation when deployed.
 
 ---
 
@@ -70,6 +70,7 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 - The Cisco switch enforces **VLAN segmentation and ACL-based policy control**.  
 - pfSense handles **inter-VLAN routing and DHCP**, providing default gateways for each VLAN.  
 - VLANs and trunking define the network topology for isolation and monitoring.  
-- Access rules are applied to minimize lateral movement and enforce operational roles.
+- Switch ACLs and pfSense firewall rules work together to **minimize lateral movement** and enforce operational roles.  
+- Pre-secured VLANs enable safe expansion for future IoT and Guest Wi-Fi networks.
 
 ---
