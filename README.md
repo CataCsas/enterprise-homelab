@@ -13,7 +13,9 @@ The environment is built using:
 - **pfSense** as the edge firewall, inter-VLAN router, and perimeter control
 - **Cisco Catalyst switching** for VLAN segmentation, trunking, and access-layer enforcement
 - **VLAN-based segmentation** to separate users, infrastructure, IoT, and guest traffic
-- A **Linux-based SIEM platform** for centralized logging and analysis
+- **Wazuh SIEM (Linux-based)** for centralized log collection, alerting, and security monitoring
+
+Core infrastructure components (pfSense, Cisco switch, SIEM) use static IP addressing to ensure stable routing, predictable firewall enforcement, and consistent log ingestion.
 
 The lab emphasizes **architectural decisions, security rationale, and operational discipline** aligned with SOC workflows.
 
@@ -63,6 +65,17 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 
 ## Status
 
-The lab is actively maintained and expanded as components are deployed and validated.  
-Documentation is updated alongside infrastructure changes to reflect the current state of the environment.
+Current implementation includes:
 
+- Static IP assignment for core infrastructure (pfSense, Cisco management, SIEM)  
+- Wired VLAN segmentation (Management, Security, Users, Printers)  
+- Stateful firewall policy with restricted inter-VLAN access  
+- SIEM positioned in dedicated monitoring VLAN  
+
+Planned next phases:
+
+- Wireless VLAN segmentation  
+- Advanced Wazuh alert simulation and rule tuning  
+- Detection case studies and incident response documentation  
+
+---
