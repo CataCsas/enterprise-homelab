@@ -67,7 +67,7 @@ VLAN10  VLAN20    VLAN30   VLAN40    VLAN50     VLAN60
 - VLAN-aware SSIDs planned for enterprise-style segmentation.
 
 ### Security Monitoring Host
-- Linux-based SIEM host deployed in Security VLAN.
+- Wazuh SIEM host (Linux-based) deployed in Security VLAN using static IP addressing.
 - Collects logs and telemetry from all VLANs.
 - Isolated from user and guest traffic.
 
