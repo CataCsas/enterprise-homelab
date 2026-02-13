@@ -124,6 +124,26 @@ Dynamic addressing is used for general user, IoT, and guest endpoints.
 
 ---
 
+### Infrastructure Addressing Stability
+
+Core infrastructure components use **static IP addressing** rather than dynamic leases.
+
+This includes:
+- pfSense interfaces  
+- Cisco switch management interface  
+- Wazuh SIEM host  
+- Printer VLAN devices  
+
+**Rationale:**
+- Prevents dependency on DHCP for security-critical services  
+- Ensures firewall rule consistency  
+- Stabilizes log source identification within the SIEM  
+- Reduces configuration drift during future architectural changes  
+
+This decision formalizes the environment as a controlled infrastructure baseline rather than a dynamically evolving lab network.
+
+---
+
 ## Wireless Design Considerations
 
 Wireless access is currently provided via a consumer-grade mesh system operating in **bridge mode**.
@@ -143,14 +163,16 @@ This phased approach reflects realistic upgrade paths found in production enviro
 
 ## SIEM Placement and Scope
 
-A dedicated Linux-based SIEM host is deployed within the **Security VLAN**.
+A dedicated **Wazuh SIEM host (Linux-based)** is deployed within the **Security VLAN** using a static IP address.
 
 **Rationale:**
 - Isolates monitoring infrastructure from general user traffic  
 - Limits exposure while preserving visibility  
 - Aligns with enterprise SOC architectures  
 
-Firewall policy design and validation were completed prior to final SIEM relocation to ensure monitoring infrastructure is introduced into a stable, well-defined security posture.
+Firewall policy design and validation were completed prior to final SIEM relocation to ensure monitoring infrastructure was introduced into a stable, well-defined security posture.
+
+Placement and addressing were finalized after firewall policy stabilization to ensure monitoring integrity and eliminate dependency on dynamic network state.
 
 The SIEM scope is intended to expand incrementally as additional infrastructure is deployed and validated.
 
