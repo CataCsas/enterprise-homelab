@@ -13,11 +13,11 @@ Decisions documented here prioritize **clarity, defensibility, and alignment wit
 The Netgate SG-2100 running pfSense is positioned as the **edge firewall, internet gateway, inter-VLAN router, and primary policy enforcement point**.
 
 pfSense is responsible for:
-- Inter-VLAN routing
-- Default gateway services for all internal networks
-- DHCP services
-- NAT and perimeter firewall enforcement
-- East–west traffic control between VLANs
+- Inter-VLAN routing  
+- Default gateway services for all internal networks  
+- DHCP services  
+- NAT and perimeter firewall enforcement  
+- East–west traffic control between VLANs  
 
 **Rationale:**
 - Centralizes routing and security policy at a single, auditable control point  
@@ -33,10 +33,10 @@ This design was selected after evaluating Layer 3 routing on the switching platf
 
 The Cisco Catalyst WS-C3560CX-8PC-S functions as a **Layer 2 access switch**, providing:
 
-- VLAN segmentation
-- Trunking to the firewall
-- Access port assignment and enforcement
-- Enterprise-style interface configuration and operational discipline
+- VLAN segmentation  
+- Trunking to the firewall  
+- Access port assignment and enforcement  
+- Enterprise-style interface configuration and operational discipline  
 
 **Rationale:**
 - The installed IOS image does not support the required Layer 3 routing features  
@@ -67,8 +67,11 @@ Each VLAN is treated as a distinct **trust zone**, with access scoped to its ope
 - IPv6 is explicitly disabled across all VLANs to prevent unintended exposure  
 - Internet access is allowed only where required  
 - Internal network access is tightly constrained using alias-based policy logic  
+- Infrastructure dependencies (DNS and NTP) are explicitly permitted rather than assumed  
 
 Firewall rules were fully designed and implemented **before** finalizing static IP assignments or relocating the SIEM, ensuring policy stability and preventing configuration drift.
+
+Operational validation confirmed that infrastructure services such as DNS (53) and NTP (123) must be explicitly allowed per VLAN to preserve system functionality under a strict default-deny posture.
 
 ---
 
@@ -76,12 +79,12 @@ Firewall rules were fully designed and implemented **before** finalizing static 
 
 The network is segmented using function-based VLANs:
 
-- **VLAN 10 – Mgmt** (high trust)
-- **VLAN 20 – Security** (high trust, scoped)
-- **VLAN 30 – Printers** (restricted, low capability)
-- **VLAN 40 – IoT** (untrusted, future)
-- **VLAN 50 – Users_Trust** (mixed trust)
-- **VLAN 60 – Guest** (untrusted, future)
+- **VLAN 10 – Mgmt** (high trust)  
+- **VLAN 20 – Security** (high trust, scoped)  
+- **VLAN 30 – Printers** (restricted, low capability)  
+- **VLAN 40 – IoT** (untrusted, future)  
+- **VLAN 50 – Users_Trust** (mixed trust)  
+- **VLAN 60 – Guest** (untrusted, future)  
 
 **Rationale:**
 - Limits broadcast domains  
@@ -172,9 +175,14 @@ A dedicated **Wazuh SIEM host (Linux-based)** is deployed within the **Security 
 
 Firewall policy design and validation were completed prior to final SIEM relocation to ensure monitoring infrastructure was introduced into a stable, well-defined security posture.
 
-Placement and addressing were finalized after firewall policy stabilization to ensure monitoring integrity and eliminate dependency on dynamic network state.
+Operational validation has confirmed:
 
-The SIEM scope is intended to expand incrementally as additional infrastructure is deployed and validated.
+- Successful log ingestion from local system logs  
+- Authentication failure correlation  
+- Multi-stage persistence detection  
+- File Integrity Monitoring (FIM) validation on sensitive system files  
+
+The SIEM scope is expanding incrementally through structured detection case studies to validate monitoring coverage and SOC-style triage workflows.
 
 ---
 
@@ -197,6 +205,8 @@ The homelab evolves incrementally following a consistent pattern:
 - Implement  
 - Validate  
 - Document  
+
+Detection validation exercises now form part of the validation phase, ensuring monitoring controls are tested rather than assumed.
 
 Future enhancements are tracked separately to avoid conflating current-state architecture with planned capabilities.
 
