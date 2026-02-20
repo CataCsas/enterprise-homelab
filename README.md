@@ -10,10 +10,10 @@ The lab simulates real-world enterprise infrastructure with an emphasis on clear
 
 The environment is built using:
 
-- **pfSense** as the edge firewall, inter-VLAN router, and perimeter control
-- **Cisco Catalyst switching** for VLAN segmentation, trunking, and access-layer enforcement
-- **VLAN-based segmentation** to separate users, infrastructure, IoT, and guest traffic
-- **Wazuh SIEM (Linux-based)** for centralized log collection, alerting, and security monitoring
+- **pfSense** as the edge firewall, inter-VLAN router, and perimeter control  
+- **Cisco Catalyst switching** for VLAN segmentation, trunking, and access-layer enforcement  
+- **VLAN-based segmentation** to separate users, infrastructure, IoT, and guest traffic  
+- **Wazuh SIEM (Linux-based)** for centralized log collection, alerting, and security monitoring  
 
 Core infrastructure components (pfSense, Cisco switch, SIEM) use static IP addressing to ensure stable routing, predictable firewall enforcement, and consistent log ingestion.
 
@@ -47,6 +47,7 @@ This repository is supported by structured documentation covering network design
 - [`logging-scope.md`](./security/logging-scope.md)
 - [`siem-overview.md`](./security/siem-overview.md)
 - [`threat-model.md`](./security/threat-model.md)
+- [`detection-cases/`](./security/detection-cases/)
 
 ---
 
@@ -65,17 +66,46 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 
 ## Status
 
-Current implementation includes:
+### Infrastructure
 
 - Static IP assignment for core infrastructure (pfSense, Cisco management, SIEM)  
 - Wired VLAN segmentation (Management, Security, Users, Printers)  
 - Stateful firewall policy with restricted inter-VLAN access  
-- SIEM positioned in dedicated monitoring VLAN  
+- Dedicated Security VLAN (VLAN20) for SIEM monitoring  
 
-Planned next phases:
+### Security Monitoring
 
+- Wazuh installed and operational on VLAN20  
+- Log ingestion validated from `/var/log/auth.log`  
+- Alert correlation and rule validation confirmed  
+
+### Detection Case Studies (Completed)
+
+- **Detection Case 01 – Failed Sudo Escalation**
+  - Validated Rule 5503 (authentication failure)
+  - Correlated escalation to Rule 5404 (three failed sudo attempts)
+  - Documented SOC triage workflow
+
+- **Detection Case 02 – Scripted Persistence Simulation**
+  - Simulated account creation and privilege escalation
+  - Validated File Integrity Monitoring (FIM) for `/etc/passwd`, `/etc/group`
+  - Detected cron-based persistence creation
+  - Captured structured `alerts.json` snapshot for reconstruction
+
+### Operational Documentation
+
+- VLAN20 DNS/NTP connectivity incident documented  
+- Firewall rule refinement recorded with remediation steps  
+- Change management and lessons learned updated  
+
+---
+
+## Planned Next Phases
+
+- Cross-VLAN detection case (centralized monitoring validation)  
 - Wireless VLAN segmentation  
-- Advanced Wazuh alert simulation and rule tuning  
-- Detection case studies and incident response documentation  
+- Advanced Wazuh rule tuning and dashboard refinement  
+- Structured log analysis and timeline reconstruction exercises  
+- DFIR-focused portfolio projects  
 
 ---
