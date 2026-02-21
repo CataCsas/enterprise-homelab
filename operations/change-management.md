@@ -1,6 +1,6 @@
 # Change Management
 
-This document defines the process for planning, implementing, and tracking changes within the **enterprise-homelab** environment. It serves as the authoritative change log to ensure all modifications are documented, verified, and traceable.
+This document defines the process for planning, implementing, and tracking changes within the **enterprise-homelab** environment. It serves as the authoritative record to ensure all modifications are documented, verified, and traceable.
 
 ---
 
@@ -18,16 +18,16 @@ This document defines the process for planning, implementing, and tracking chang
 ## Implementation Process
 
 1. **Preparation**
-   - Back up existing configurations where applicable (pfSense, Cisco switch, SIEM host).
-   - Document the current state and intended changes in repository Markdown files.
+   - Back up existing configurations where applicable.
+   - Document the current state and intended changes in repository files.
 
 2. **Execution**
-   - Apply changes during low-activity periods where possible.
-   - Use console or management interfaces appropriate to each device.
+   - Apply changes during low-activity periods where feasible.
+   - Use device management interfaces appropriate to each platform.
 
 3. **Verification**
-   - Validate connectivity, VLAN segmentation, and device functionality.
-   - Confirm log forwarding and monitoring visibility within the SIEM.
+   - Confirm connectivity and VLAN segmentation.
+   - Validate device functionality and monitoring visibility.
 
 4. **Documentation**
    - Record each completed change with:
@@ -41,26 +41,26 @@ This document defines the process for planning, implementing, and tracking chang
 
 | Date       | Change Description                                           | Affected Components            | Outcome |
 |------------|-------------------------------------------------------------|--------------------------------|---------|
-| 2026-02-12 | Core infrastructure stabilization and SIEM final placement  | pfSense, Cisco switch, SIEM    | Assigned static IPs to pfSense and Cisco management interfaces; relocated Wazuh SIEM to final VLAN port (Gi0/2); completed wired VLAN segmentation baseline; validated firewall rules and stateful inter-VLAN policy; confirmed service functionality (including printer VLAN access on permitted ports); verified SIEM connectivity and log ingestion after relocation |
-| 2026-02-03 | Final VLAN deployment and baseline validation               | pfSense, Cisco switch, SIEM    | All production VLANs (Mgmt, Security, Printers, IoT, Users_Trust, Guest) confirmed operational; inter-VLAN routing validated via pfSense firewall rules; trunk and access ports verified; DHCP scopes confirmed; SIEM visibility validated across infrastructure VLANs |
-| 2026-01-29 | Inter-VLAN policy enforcement validation                    | pfSense, Cisco switch          | Firewall rules reviewed per VLAN; unauthorized lateral movement blocked; permitted management and logging paths verified |
-| 2026-01-26 | L3 routing and DHCP moved to pfSense                        | pfSense, Cisco switch          | VLAN interfaces created on pfSense; DHCP pools enabled; firewall rules applied; trunk and access ports verified; SIEM and Velop clients tested for correct connectivity and IP assignment |
-| 2026-01-22 | USB console cable replaced                                  | Cisco switch                   | FT232-based USB→RJ45 cable tested for FTDI compatibility; used for VLAN configuration; console sessions stable and responsive |
-| 2026-01-19 | Console access and pre-change validation                    | Cisco switch                   | Verified USB console access, IOS version, licensing, VLANs, and interface usage; session lag observed during extended activity |
-| 2026-01-19 | VLAN 30 creation and port assignment                        | Cisco switch                   | VLAN 30 (Printers) created; Gi0/7 and Gi0/8 assigned; verified using `show vlan brief` and `show interfaces status`; console lag noted prior to cable replacement |
+| 2026-02-12 | Core infrastructure stabilization and SIEM final placement  | pfSense, Cisco switch, SIEM    | Static IPs assigned; SIEM relocated; wired VLAN baseline completed; firewall rules validated; monitoring confirmed |
+| 2026-02-03 | Final VLAN deployment and baseline validation               | pfSense, Cisco switch, SIEM    | All VLANs operational; inter-VLAN routing validated; DHCP and trunk/access ports confirmed; monitoring verified |
+| 2026-01-29 | Inter-VLAN policy enforcement validation                    | pfSense, Cisco switch          | Firewall rules reviewed; unauthorized lateral movement blocked; permitted management/logging paths verified |
+| 2026-01-26 | L3 routing and DHCP moved to pfSense                        | pfSense, Cisco switch          | VLAN interfaces and DHCP pools enabled; firewall rules applied; connectivity tested |
+| 2026-01-22 | USB console cable replaced                                  | Cisco switch                   | Console access stabilized; used for VLAN configuration |
+| 2026-01-19 | Console access and pre-change validation                    | Cisco switch                   | Verified console functionality, IOS version, licensing, and VLAN readiness |
+| 2026-01-19 | VLAN 30 creation and port assignment                        | Cisco switch                   | VLAN 30 created; ports assigned; verification commands executed |
 
 > Notes:
-> - This table represents the authoritative operational history of the environment.
-> - Milestone entries establish clear baselines for future changes.
-> - Chronological ordering highlights architectural progression and issue resolution.
+> - Table represents the authoritative operational history of the environment.
+> - Milestone entries establish baselines for future changes.
+> - Chronological ordering highlights architectural progression.
 
 ---
 
 ## Summary
 
-- Change management captures both incremental work and major architectural milestones.
-- The February 12, 2026 milestone establishes a stabilized infrastructure baseline with static addressing and finalized SIEM placement.
-- All future detection engineering, monitoring expansion, and wireless segmentation changes will be measured against this controlled baseline.
-- Operational discipline is maintained by validating functionality and monitoring visibility after each architectural adjustment.
+- Change management captures incremental work and architectural milestones.
+- The February 12, 2026 milestone establishes a stabilized infrastructure baseline.
+- All subsequent detection engineering, monitoring expansion, and wireless segmentation changes will be evaluated against this baseline.
+- Operational discipline is maintained by verification and documentation of each change.
 
 ---
