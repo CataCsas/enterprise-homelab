@@ -59,7 +59,7 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 
 ## DHCP Services
 
-- DHCP is now **centrally managed by pfSense** for all VLANs.  
+- DHCP is centrally managed by pfSense for all VLANs.  
 - Reserved IPs are configured for critical devices (SIEM, printers).  
 - Static IPs are used for infrastructure devices (Netgate, Cisco switch management).  
 
@@ -67,10 +67,13 @@ Each VLAN is defined on the Cisco switch and mapped to the corresponding pfSense
 
 ## Summary
 
-- The Cisco switch enforces **VLAN segmentation and ACL-based policy control**.  
-- pfSense handles **inter-VLAN routing and DHCP**, providing default gateways for each VLAN.  
-- VLANs and trunking define the network topology for isolation and monitoring.  
-- Switch ACLs and pfSense firewall rules work together to **minimize lateral movement** and enforce operational roles.  
-- Pre-secured VLANs enable safe expansion for future IoT and Guest Wi-Fi networks.
+This design delineates responsibilities clearly between layers:
+
+- **Cisco Catalyst (L2):** Enforces VLAN isolation, access port policies, and ACL-based traffic constraints.  
+- **pfSense (L3):** Handles inter-VLAN routing, DHCP, and centralized default gateway services.  
+- VLAN trunking maintains consistent connectivity without exposing internal routing complexity.  
+- ACLs on the switch complement firewall rules to reduce risk and enforce functional separation.  
+
+The approach ensures **clear operational boundaries, predictable routing, and disciplined switching enforcement**, independent of addressing or higher-level topology details.
 
 ---
