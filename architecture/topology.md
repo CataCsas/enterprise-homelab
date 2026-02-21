@@ -2,6 +2,8 @@
 
 This document describes the logical and physical topology of the enterprise-style homelab. The environment is designed to resemble a small enterprise network with clear separation between edge security, switching, wireless access, and monitoring systems. The topology prioritizes visibility, segmentation, and operational clarity over complexity.
 
+All routing, policy enforcement, and east–west traffic inspection occur at the firewall layer to maintain centralized control and auditable rule management.
+
 ---
 
 ## High-Level Logical Topology
@@ -11,7 +13,7 @@ This document describes the logical and physical topology of the enterprise-styl
         |
 [ pfSense (Netgate SG-2100) ]
         |
-VLAN-Trunked L2 Network
+802.1Q VLAN Trunk
         |
 [ Cisco Catalyst 3560CX ]
         |
@@ -21,10 +23,28 @@ Mgmt   Security  Printers   IoT   Users_Trust    Guest
 VLAN10  VLAN20    VLAN30   VLAN40    VLAN50     VLAN60
 ```
 
-- pfSense handles all inter-VLAN routing and firewall enforcement.
-- Cisco Catalyst switch operates as a Layer 2 access switch with VLAN segmentation.
-- VLANs are isolated based on function and trust level.
-- Wireless clients currently reside in the Users_Trust VLAN; VLAN-aware WiFi is planned for future deployment.
+
+- pfSense performs all Layer 3 routing and firewall enforcement.
+- The Cisco Catalyst operates strictly as a Layer 2 access switch.
+- All VLANs are trunked to pfSense via 802.1Q.
+- Inter-VLAN communication is explicitly controlled by firewall policy.
+- Dormant VLANs (IoT and Guest) are pre-defined and default-deny.
+
+---
+
+## VLAN Architecture
+
+| VLAN | Name         | Purpose                                  | Trust Level |
+|------|--------------|-------------------------------------------|-------------|
+| 10   | Management   | Infrastructure management interfaces      | High        |
+| 20   | Security     | SIEM, monitoring, and security tooling    | High        |
+| 30   | Printers     | Network printers and utility devices      | Restricted  |
+| 40   | IoT          | IoT and untrusted embedded devices        | Low         |
+| 50   | Users_Trust  | Primary workstation and lab devices       | Medium      |
+| 60   | Guest        | Internet-only guest access                | Low         |
+
+All VLAN gateways reside on pfSense.  
+No Layer 3 switching occurs on the Cisco Catalyst.
 
 ---
 
@@ -33,71 +53,128 @@ VLAN10  VLAN20    VLAN30   VLAN40    VLAN50     VLAN60
 - **ISP Router → pfSense (WAN)**  
   Provides upstream internet connectivity.
 
-- **pfSense (LAN) → Cisco Catalyst 3560CX (Trunk)**  
-  Carries all VLANs. pfSense enforces routing, access control, and firewall policy.
+- **pfSense (LAN) → Cisco Catalyst 3560CX (802.1Q Trunk)**  
+  Carries all defined VLANs.  
+  Firewall policies govern all inter-VLAN traffic.
 
 - **Cisco Catalyst → End Devices**
-  - Wired endpoints connect to access ports per VLAN assignment.
-  - Wireless access points connect to trunk or L2 ports; currently bridged into Users_Trust VLAN.
+  - Access ports statically assigned per VLAN.
+  - Trunk port dedicated to firewall uplink.
+  - Optional trunk ports reserved for future VLAN-aware wireless APs.
 
-- **Wireless Clients**
-  - Consumer mesh operating in bridge mode.
-  - VLAN-aware SSIDs planned for enterprise-style segmentation.
+- **Wireless Access Layer**
+  - Current: Consumer mesh operating in bridge mode (Users_Trust VLAN).
+  - Planned: VLAN-aware enterprise APs with segmented SSIDs mapped to VLAN40 and VLAN60.
 
 ---
 
 ## Component Roles
 
 ### Edge Firewall (pfSense / Netgate SG-2100)
-- Internet gateway.
+
+- Default gateway for all VLANs.
 - NAT and perimeter firewall.
-- Inter-VLAN routing and access control.
-- Central point for all policy enforcement, including east–west traffic.
-- Pre-secured future VLANs (IoT / Guest) are defined and blocked.
+- Inter-VLAN routing and east–west policy enforcement.
+- Suricata IDS/IPS (planned or staged) for traffic inspection.
+- Centralized logging export to Wazuh SIEM.
 
 ### Core / Access Switching (Cisco Catalyst WS-C3560CX-8PC-S)
-- Layer 2 VLAN enforcement.
-- Trunking to pfSense.
-- Access port assignment.
-- Central aggregation point for monitoring and logging.
 
-### Wireless Access Layer
-- Temporary consumer mesh in bridge mode.
-- Provides network access without routing or VLAN separation.
-- VLAN-aware SSIDs planned for enterprise-style segmentation.
+- Layer 2 VLAN segmentation.
+- 802.1Q trunk to firewall.
+- Static access port assignments.
+- Logging enabled for configuration and interface state changes.
 
-### Security Monitoring Host
-- Wazuh SIEM host (Linux-based) deployed in Security VLAN using static IP addressing.
-- Collects logs and telemetry from all VLANs.
-- Isolated from user and guest traffic.
+### Security Monitoring Host (Security VLAN)
+
+- Linux-based Wazuh SIEM node.
+- Static IP addressing.
+- Receives:
+  - Firewall logs
+  - System logs
+  - Authentication logs
+  - IDS alerts (when enabled)
+- Isolated from user and guest VLANs.
+
+### Wireless Infrastructure (Current and Planned)
+
+- Current: Bridge-mode consumer mesh.
+- Future:
+  - VLAN-aware SSIDs
+  - IoT and Guest network activation
+  - Controlled east–west access validation
+  - SIEM log verification for wireless events
 
 ---
 
-## Design Characteristics
+## Traffic Flow Model
 
-- Single edge firewall for centralized policy enforcement.
-- Layer 2 switching for endpoint segmentation.
-- Functional VLAN separation to reduce attack surface and lateral movement.
-- Pre-secured dormant VLANs for future expansion (IoT and Guest).
-- Visibility-first approach to support SOC-style monitoring.
+- North–South traffic:
+  - Internet ↔ pfSense ↔ Internal VLANs
+  - NAT and firewall inspection at perimeter.
+
+- East–West traffic:
+  - VLAN ↔ pfSense ↔ VLAN
+  - Explicit firewall rule requirement.
+  - Default deny between trust zones.
+
+- Security visibility:
+  - Firewall logs exported to SIEM.
+  - IDS alerts (future state) ingested and correlated.
+  - Cross-VLAN access attempts monitored.
 
 ---
 
-## Current State vs Future State
+## Logging & Visibility Model
 
-**Current State**
-- pfSense performs all inter-VLAN routing and firewall enforcement.
-- Cisco Catalyst acts as L2 switch with VLAN segmentation.
-- Wireless clients temporarily consolidated in Users_Trust VLAN.
-- Security monitoring host operational in Security VLAN.
-- Future VLANs exist but are pre-secured and inactive.
+- Centralized log aggregation via Wazuh.
+- Firewall deny events monitored for policy validation.
+- Authentication events monitored for anomaly detection.
+- Planned validation of log coverage across all active VLANs.
+- Configuration changes tracked for drift detection.
 
-**Future State**
-- VLAN-aware enterprise WiFi access points.
-- Dedicated IoT and Guest networks.
-- Expanded server infrastructure (e.g., Active Directory, centralized authentication).
-- Enhanced logging, alerting, and access controls.
+---
 
-This topology is intentionally simple, auditable, and aligned with enterprise and SOC practices. Additional complexity is introduced only when it provides clear operational or security benefit.
+## Current State
+
+- pfSense performing all routing and firewall enforcement.
+- Cisco Catalyst operating strictly as Layer 2.
+- VLAN segmentation implemented and verified.
+- Security monitoring host operational in VLAN20.
+- Dormant VLAN40 (IoT) and VLAN60 (Guest) defined but inactive.
+- Wireless currently consolidated in Users_Trust VLAN.
+- Structured detection engineering phase in progress.
+
+---
+
+## Planned Enhancements
+
+- VLAN-aware enterprise wireless deployment.
+- Activation of IoT and Guest networks with strict isolation.
+- IDS/IPS inspection tuning and validation.
+- Expanded detection rule coverage mapped to MITRE ATT&CK.
+- Additional infrastructure services (e.g., centralized authentication).
+- Formalized change tracking and configuration baselines.
+
+---
+
+## Design Principles
+
+- Centralized Layer 3 control at the firewall.
+- Explicit trust boundary enforcement.
+- Default-deny inter-VLAN posture.
+- Incremental complexity based on operational value.
+- Visibility-first architecture aligned with SOC practices.
+- Documentation updated alongside infrastructure changes.
+
+---
+
+## Summary
+
+This topology reflects a deliberate enterprise-aligned design:
+
+**Segmentation → Centralized Enforcement → Visibility → Detection Engineering → Incident Response Practice**
+
+The lab prioritizes operational realism over unnecessary complexity, supporting both secure architecture design and structured security operations development.
 
 ---
