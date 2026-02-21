@@ -63,9 +63,13 @@ Static assignments ensure consistent connectivity, predictable routing, and reli
 
 ## Summary
 
-- VLAN-based addressing improves clarity, security, and operational control.
-- Static IPs and DHCP reservations ensure reliable connectivity for critical devices.
-- Pre-secured VLANs support phased lab expansion.
-- The addressing strategy supports lab growth, experimentation, and professional SOC-style operations.
+The IP addressing strategy formalizes the environment’s **operational consistency**:
+
+- Critical infrastructure devices maintain predictable connectivity through static assignments or reservations.  
+- DHCP pools provide controlled, dynamic addressing for endpoints without disrupting policy enforcement.  
+- Subnet segregation per VLAN simplifies troubleshooting, validation, and monitoring.  
+- Documented practices ensure repeatability and minimize configuration drift across the lab.
+
+This approach emphasizes **stability, auditable operations, and disciplined network management** rather than general design or expansion goals.
 
 ---
