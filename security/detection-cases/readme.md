@@ -12,6 +12,6 @@ Current scenarios:
 
 1. `01-sudo-failure.md` – PAM authentication failure detection  
 2. `02-scripted-persistence.md` – Multi-stage persistence detection with FIM validation  
-3. `03-cross-vlan-detection.md` – Planned: cross-VLAN alert correlation (Phase 2 closure)
+3. `03-cross-vlan-detection.md` – Planned: cross-VLAN alert correlation
 
 > Maintain one Markdown file per scenario. Future detection exercises can expand this folder.
