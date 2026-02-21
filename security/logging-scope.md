@@ -28,7 +28,8 @@ The logging strategy prioritizes **control-plane visibility, segmentation enforc
   Firewall and switch control-plane activity, management access events.
 
 - **VLAN 20 – Security**  
-  SIEM host logs, security tooling activity, and log ingestion validation.
+  SIEM host logs, security tooling activity, and log ingestion validation.  
+  *Operational note:* A recent VLAN20 connectivity incident highlighted the importance of monitoring inter-VLAN rules and ensuring DNS/NTP traffic is logged to quickly identify policy-related access issues.
 
 - **VLAN 30 – Printers**  
   Limited operational visibility to confirm availability and policy compliance.
@@ -86,5 +87,6 @@ Expansion targets include:
 - User and guest devices are not deeply monitored.
 - IoT and Guest VLANs are pre-secured and currently inactive.
 - Visibility is expanded deliberately to avoid noise and misinterpretation.
+- Operational incidents, like the VLAN20 SIEM connectivity issue, reinforce the value of selective and auditable logging.
 
 ---
