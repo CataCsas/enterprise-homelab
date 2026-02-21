@@ -81,12 +81,12 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 
 ### Detection Case Studies (Completed)
 
-- **Detection Case 01 – Failed Sudo Escalation**
+- **[Detection Case 01 – Failed Sudo Escalation](./security/detection-cases/01-sudo-failure.md)**
   - Validated Rule 5503 (authentication failure)
   - Correlated escalation to Rule 5404 (three failed sudo attempts)
   - Documented SOC triage workflow
 
-- **Detection Case 02 – Scripted Persistence Simulation**
+- **[Detection Case 02 – Scripted Persistence Simulation](./security/detection-cases/02-scripted-persistence.md)**
   - Simulated account creation and privilege escalation
   - Validated File Integrity Monitoring (FIM) for `/etc/passwd`, `/etc/group`
   - Detected cron-based persistence creation
