@@ -27,6 +27,10 @@ This document summarizes key insights and takeaways from the design, deployment,
 - **Operational tooling impacts reliability**  
   Replacing an incompatible console cable with an FT232-based USB-to-RJ45 adapter eliminated session lag and improved day-to-day operational efficiency.
 
+- **Troubleshooting under restrictive policies**  
+  During a recent SIEM connectivity issue in VLAN20, DNS and NTP traffic was blocked due to a removed intra-VLAN rule. Resolution required explicitly adding a dedicated **VLAN20 → pfSense DNS & NTP** firewall rule, restoring update and internet access while maintaining segmentation.  
+  *This demonstrates operational awareness, SOC-style troubleshooting, and controlled policy adjustments.*
+
 ---
 
 ## Areas for Future Improvement
@@ -53,5 +57,6 @@ This document summarizes key insights and takeaways from the design, deployment,
 - Lessons learned directly inform future design and operational decisions.
 - Emphasis on planning, segmentation, centralized enforcement, and documentation supports a stable and scalable lab.
 - The environment continues to evolve using the same disciplined, enterprise-aligned approach.
+- Real-world operational incidents, like the VLAN20 SIEM connectivity issue, highlight the importance of careful firewall policy management.
 
 ---
