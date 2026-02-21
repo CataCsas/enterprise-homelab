@@ -142,19 +142,15 @@ To preserve architectural clarity:
 
 ## Summary
 
-Planned improvements focus on:
+Future enhancements emphasize measurable operational progress and SOC-aligned practice:
 
-- Expanding detection engineering depth  
-- Introducing IDS-based visibility  
-- Formalizing cross-VLAN monitoring validation  
-- Practicing structured incident response workflows  
-- Strengthening identity controls and wireless segmentation  
-- Advancing timeline reconstruction capability  
+- Expand monitored log sources and detection coverage across all VLANs  
+- Develop, tune, and validate custom alerting rules  
+- Execute structured detection case studies and document investigative workflows  
+- Introduce IDS visibility and controlled east–west traffic inspection  
+- Strengthen administrative access, identity controls, and segmented wireless networks  
+- Maintain disciplined documentation and change management  
 
-The lab continues progressing through a deliberate maturity path:
-
-**Secure Network Architecture → Stabilized Infrastructure → Validated Detection → Structured Response Practice**
-
-The objective is to simulate not only enterprise network design, but enterprise security operations discipline.
+This phase shifts the lab from a stabilized infrastructure baseline toward **repeatable detection engineering and incident response practice**, providing a controlled environment for testing, validation, and operational learning.
 
 ---
