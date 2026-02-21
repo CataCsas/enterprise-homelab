@@ -1,49 +1,53 @@
 # Future Improvements
 
-This document outlines planned enhancements to the **enterprise-homelab** environment. The focus is on expanding detection, visibility, and incident response capabilities in a controlled and repeatable manner.
+This document outlines planned enhancements to the **enterprise-homelab** environment. The focus is on expanding detection engineering, traffic visibility, and structured incident response capability in a controlled and repeatable manner.
 
-All future work builds on an established foundation of VLAN segmentation, centralized routing, static infrastructure addressing, and explicit inter-VLAN firewall policy enforcement.
-
-The next phase of development transitions the lab from **secure architecture implementation** to **operational detection engineering and incident response practice**.
+The lab has progressed beyond initial secure architecture implementation and now includes validated detection case studies. Future work builds on that operational baseline.
 
 ---
 
-## Detection Engineering & Monitoring Expansion
+## Current Detection Baseline
+
+The following capabilities have been validated:
+
+- Successful Wazuh log ingestion from Linux system logs  
+- Authentication failure correlation (e.g., repeated failed sudo attempts)  
+- Detection of account creation and privilege escalation events  
+- File Integrity Monitoring (FIM) validation for sensitive system files  
+- Detection of cron-based persistence  
+- Structured alert export for timeline reconstruction  
+
+Future improvements expand on this validated foundation.
+
+---
+
+## Detection Engineering Expansion
 
 Planned enhancements include:
 
-- Expanding **Wazuh SIEM coverage** as additional devices and VLANs are activated.  
+- Expanding **Wazuh SIEM coverage** as additional devices and VLANs are activated  
 - Developing and tuning **custom detection rules** for:
-  - Authentication failures and brute-force attempts  
-  - Lateral movement indicators  
-  - Policy violations between VLAN trust zones  
+  - Cross-VLAN policy violations  
   - Suspicious outbound connections  
-- Mapping selected alerts to relevant **MITRE ATT&CK techniques** to reinforce SOC alignment.
-- Refining alert severity and threshold logic to reduce false positives.
-- Validating log completeness and source attribution across infrastructure components.
+  - Lateral movement indicators  
+  - Excessive authentication anomalies  
+- Mapping alerts to relevant **MITRE ATT&CK techniques** to reinforce SOC alignment  
+- Refining alert thresholds to reduce noise while preserving signal  
+- Validating log completeness and source attribution across infrastructure components  
 
-Each detection enhancement will include validation steps and documented outcomes.
+Each enhancement will include documented validation and outcome analysis.
 
 ---
 
-## Detection Case Studies
+## Cross-VLAN Monitoring Validation
 
-The lab will include structured detection scenarios documented as case studies:
+A planned detection case will validate centralized monitoring across segmented networks:
 
-- Authentication anomaly simulation  
-- Unauthorized cross-VLAN access attempt  
-- Suspicious service exposure or port scan activity  
-- Misconfigured or compromised IoT behavior  
+- Trigger security-relevant activity from a user VLAN  
+- Confirm ingestion and correlation by the SIEM in the Security VLAN  
+- Validate that segmentation does not impair visibility  
 
-Each case study will document:
-- Initial alert source  
-- Triage process  
-- Log correlation steps  
-- Root cause determination  
-- Containment decision  
-- Lessons learned  
-
-This approach emphasizes repeatable SOC-style investigation workflows rather than ad hoc log review.
+This scenario will demonstrate multi-host detection capability in a segmented environment.
 
 ---
 
@@ -51,38 +55,52 @@ This approach emphasizes repeatable SOC-style investigation workflows rather tha
 
 Future work will introduce deeper traffic visibility:
 
-- Enable and tune **Suricata IDS/IPS** on pfSense.  
-- Monitor selected east–west traffic paths for unexpected protocols or destinations.  
-- Validate IDS alerts and firewall denies through SIEM ingestion and correlation.  
-- Evaluate performance impact and alert noise levels before expanding inspection scope.
+- Enable and tune **Suricata IDS/IPS** on pfSense  
+- Monitor selected east–west traffic paths for unexpected protocols or destinations  
+- Validate IDS alerts through SIEM ingestion and correlation  
+- Evaluate performance impact and alert volume before expanding inspection scope  
 
-Inspection will be introduced incrementally to avoid unnecessary performance or alerting overhead.
+Inspection will be introduced incrementally to preserve stability.
 
 ---
 
-## Incident Response Practice
+## Incident Response Maturity
 
-Incident response workflows will be exercised to validate detection and containment:
+Incident response workflows will be expanded and formalized:
 
-- Simulate policy violations or misbehaving endpoints (e.g., IoT or user devices).  
-- Practice alert triage, scope assessment, and containment actions such as:
-  - Firewall rule adjustments  
+- Simulate controlled policy violations or misbehaving endpoints  
+- Practice structured triage and scope assessment  
+- Execute containment steps such as:
+  - Firewall rule refinement  
   - VLAN isolation  
   - Service restriction  
-- Document investigative reasoning and decision-making process.
+- Document investigative reasoning and decision-making steps  
 
-The objective is to build structured response discipline aligned with SOC operations.
+The objective is to reinforce disciplined SOC-style response processes.
+
+---
+
+## Structured Log Analysis & Timeline Reconstruction
+
+Future exercises will include:
+
+- Correlating multiple alert types within defined event windows  
+- Reconstructing attack timelines using structured JSON exports  
+- Identifying alert clustering patterns and causal relationships  
+- Producing concise incident summary reports  
+
+This will bridge detection engineering with entry-level DFIR methodology.
 
 ---
 
 ## Identity & Access Controls
 
-Future improvements will strengthen administrative access security:
+Planned improvements include:
 
-- Implement **multi-factor authentication** for administrative interfaces where supported.  
-- Enforce separation between administrative and non-privileged accounts.  
-- Increase visibility into privileged actions through centralized logging and review.  
-- Evaluate log retention and audit review processes for completeness.
+- Enforcing multi-factor authentication where supported  
+- Strengthening separation between privileged and non-privileged accounts  
+- Increasing visibility into administrative actions  
+- Reviewing log retention and audit completeness  
 
 ---
 
@@ -90,35 +108,35 @@ Future improvements will strengthen administrative access security:
 
 Once VLAN-aware access points are deployed:
 
-- Activate **VLAN 40 (IoT)** and **VLAN 60 (Guest)** with pre-defined firewall policies.  
-- Separate SSIDs by trust level and function.  
-- Validate isolation and access restrictions through controlled testing.  
-- Confirm SIEM visibility across newly segmented wireless networks.
+- Activate **VLAN 40 (IoT)** and **VLAN 60 (Guest)**  
+- Separate SSIDs by trust level  
+- Validate isolation and firewall enforcement  
+- Confirm SIEM visibility across wireless segments  
 
 ---
 
 ## Metrics & Validation Goals
 
-To maintain measurable progress, future phases will track:
+To maintain measurable progress:
 
-- Number of active monitored log sources  
-- Number of custom detection rules implemented  
-- False-positive reduction improvements over time  
-- Number of documented detection case studies  
-- Verification of log ingestion across all active VLANs  
+- Track active monitored log sources  
+- Track implemented detection rules  
+- Measure reduction in unnecessary alerts  
+- Document completed detection case studies  
+- Verify log ingestion across all active VLANs  
 
-This ensures progress is operationally meaningful rather than configuration-focused.
+Progress will be measured by validated monitoring capability, not configuration volume.
 
 ---
 
-## Configuration & Change Management
+## Configuration & Change Discipline
 
-To preserve stability and clarity:
+To preserve architectural clarity:
 
-- Continue tracking firewall, switch, and SIEM configuration changes.  
-- Periodically review segmentation and access rules for correctness and drift.  
-- Validate monitoring coverage after major infrastructure adjustments.  
-- Update documentation alongside infrastructure changes to reflect current state.
+- Continue tracking firewall, switch, and SIEM configuration changes  
+- Periodically review segmentation and rule sets for drift  
+- Revalidate monitoring coverage after infrastructure adjustments  
+- Update documentation alongside configuration changes  
 
 ---
 
@@ -126,16 +144,17 @@ To preserve stability and clarity:
 
 Planned improvements focus on:
 
-- Expanding detection engineering in a structured, SOC-aligned manner.  
-- Introducing IDS visibility and validating east–west monitoring.  
-- Practicing documented incident response workflows.  
-- Strengthening identity controls and wireless segmentation.  
-- Maintaining disciplined documentation and change tracking.  
+- Expanding detection engineering depth  
+- Introducing IDS-based visibility  
+- Formalizing cross-VLAN monitoring validation  
+- Practicing structured incident response workflows  
+- Strengthening identity controls and wireless segmentation  
+- Advancing timeline reconstruction capability  
 
-These enhancements reflect a deliberate progression from:
+The lab continues progressing through a deliberate maturity path:
 
-**Secure Network Architecture → Stabilized Infrastructure Baseline → Operational Detection & Response Practice**
+**Secure Network Architecture → Stabilized Infrastructure → Validated Detection → Structured Response Practice**
 
-The lab’s long-term objective is to simulate not only enterprise network design, but enterprise security operations maturity.
+The objective is to simulate not only enterprise network design, but enterprise security operations discipline.
 
 ---
