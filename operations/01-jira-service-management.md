@@ -31,7 +31,7 @@ This incident shows cross-system log analysis, user validation, and investigatio
 
 ---
 
-## 🛠️ Example Service Request – Password Reset
+## Example Service Request – Password Reset
 
 This ticket illustrates a standard IT support service request lifecycle from start to resolution.
 
@@ -47,7 +47,9 @@ This ticket illustrates a standard IT support service request lifecycle from sta
 
 ## Complete Ticket Set – Written Summary
 
-The following ticket set reflects simulated incidents and service requests created in Jira Service Management as part of the lab environment. Each ticket includes Work Type, Request Type, Summary, Components or Select a system (where applicable), Priority, and Description, along with the workflow phases Investigation / Troubleshooting and Resolution / Closure.
+The following ticket set reflects simulated incidents and service requests created in Jira Service Management as part of the lab environment.  
+
+Each ticket includes Work Type, Request Type, Summary, Components or Select a system (where applicable), Priority, and Description, along with the workflow phases Investigation / Troubleshooting and Resolution / Closure. This demonstrates a structured ITSM workflow and consistent documentation practices.
 
 ---
 
@@ -189,12 +191,12 @@ VPN logs indicate a successful login from an external IP address not previously 
 * **Description:**
 Requesting deployment of a new lab VM for security testing and network validation exercises. Standard configuration required (no external exposure). Please confirm resource availability.
 
-**Investigation Notes:**
+**Investigation / Troubleshooting:**
 * Checked resource availability.
 * Verified network access requirements.
 * Confirmed no naming conflicts with existing lab hosts.
-
-**Resolution / Action Taken:**
+* 
+**Resolution / Closure:**
 * VM deployed and configured with required services.
 * Connectivity and access verified.
 * Handover completed.
@@ -210,12 +212,12 @@ Requesting deployment of a new lab VM for security testing and network validatio
 * **Description:**
 Lab user account is no longer required. Please disable account and remove associated access to ensure compliance with least privilege and lifecycle management.
 
-**Investigation Notes:**
+**Investigation / Troubleshooting:**
 * Identified all group memberships.
 * Reviewed active sessions.
 * Confirmed no dependencies.
 
-**Resolution / Action Taken:**
+**Resolution / Closure:**
 * Account disabled.
 * Roles and group memberships removed.
 * Access revocation verified.
