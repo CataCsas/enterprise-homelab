@@ -30,9 +30,6 @@ This repository is supported by structured documentation covering network design
 - [`future-improvements.md`](./architecture/future-improvements.md)
 - [`topology.md`](./architecture/topology.md)
 
-### Documentation
-- [`screenshots.md`](./docs/screenshots.md)
-
 ### Network Design
 - [`ip-addressing.md`](./network/ip-addressing.md)
 - [`switching-routing.md`](./network/switching-routing.md)
@@ -42,12 +39,17 @@ This repository is supported by structured documentation covering network design
 ### Operations
 - [`change-management.md`](./operations/change-management.md)
 - [`lessons-learned.md`](./operations/lessons-learned.md)
+- [`01-jira-service-management.md`](./operations/01-jira-service-management.md)
 
 ### Security
 - [`logging-scope.md`](./security/logging-scope.md)
 - [`siem-overview.md`](./security/siem-overview.md)
 - [`threat-model.md`](./security/threat-model.md)
 - [`detection-cases/`](./security/detection-cases/)
+
+### Supporting Assets
+- `docs/assets/jira/` – contains screenshots used in the Jira exercise  
+> Screenshots are referenced in `01-jira-service-management.md` and do not require additional documentation files.
 
 ---
 
@@ -97,6 +99,9 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 - VLAN20 DNS/NTP connectivity incident documented  
 - Firewall rule refinement recorded with remediation steps  
 - Change management and lessons learned updated  
+- **Jira Service Management lab exercise documented**  
+  - Demonstrates simulated ITSM workflow, incident triage, service requests, and investigation/resolution documentation  
+  - See [`01-jira-service-management.md`](./operations/01-jira-service-management.md) for full details and screenshots
 
 ---
 
