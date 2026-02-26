@@ -13,7 +13,7 @@ This document showcases a simulated ITSM workflow using **Jira Service Managemen
 
 This board snapshot represents an active IT workflow with mixed incident and service request tickets across priorities.
 
-![Jira Board Overview](./docs/assets/jira/jira-board-overview.png)
+![Jira Board Overview](../docs/assets/jira/jira-board-overview.png)
 
 ---
 
@@ -21,7 +21,7 @@ This board snapshot represents an active IT workflow with mixed incident and ser
 
 This incident shows cross-system log analysis, user validation, and investigation steps before closure.
 
-![Suspicious Login Detail](./docs/assets/jira/jira-suspicious-login.png)
+![Suspicious Login Detail](../docs/assets/jira/jira-suspicious-login.png)
 
 **Key points:**
 
@@ -35,7 +35,7 @@ This incident shows cross-system log analysis, user validation, and investigatio
 
 This ticket illustrates a standard IT support service request lifecycle from start to resolution.
 
-![Password Reset Detail](./docs/assets/jira/jira-password-reset.png)
+![Password Reset Detail](../docs/assets/jira/jira-password-reset.png)
 
 **Key points:**
 
