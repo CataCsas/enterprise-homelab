@@ -51,9 +51,9 @@ Create 2–3 Microsoft Entra ID users, assign roles simulating least-privilege a
 
 | User        | Screenshot |
 |------------|------------|
-| Lucy Admin | ![Lucy Admin](docs/assets/cloud/lab01-Lucy-review.png) |
-| Ricky Security | ![Ricky Security](docs/assets/cloud/lab01-Ricky-review.png) |
-| Bob Auditor | ![Bob Auditor](docs/assets/cloud/lab01-Bob-review.png) |
+| Lucy Admin | ![Lucy Admin](../docs/assets/cloud/lab01-Lucy-review.png) |
+| Ricky Security | ![Ricky Security](../docs/assets/cloud/lab01-Ricky-review.png) |
+| Bob Auditor | ![Bob Auditor](../docs/assets/cloud/lab01-Bob-review.png) |
 
 > Screenshots are blurred where necessary to protect sensitive information.
 
