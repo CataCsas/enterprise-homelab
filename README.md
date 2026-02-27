@@ -30,6 +30,9 @@ This repository is supported by structured documentation covering network design
 - [`future-improvements.md`](./architecture/future-improvements.md)
 - [`topology.md`](./architecture/topology.md)
 
+### Cloud Identity & Access Management
+- [`01-azure-ad-users.md`](./cloud/01-azure-ad-users.md)
+
 ### Network Design
 - [`ip-addressing.md`](./network/ip-addressing.md)
 - [`switching-routing.md`](./network/switching-routing.md)
@@ -37,9 +40,9 @@ This repository is supported by structured documentation covering network design
 - [`wireless.md`](./network/wireless.md)
 
 ### Operations
+- [`01-jira-service-management.md`](./operations/01-jira-service-management.md)
 - [`change-management.md`](./operations/change-management.md)
 - [`lessons-learned.md`](./operations/lessons-learned.md)
-- [`01-jira-service-management.md`](./operations/01-jira-service-management.md)
 
 ### Security
 - [`logging-scope.md`](./security/logging-scope.md)
@@ -48,8 +51,9 @@ This repository is supported by structured documentation covering network design
 - [`detection-cases/`](./security/detection-cases/)
 
 ### Supporting Assets
-- `docs/assets/jira/` – contains screenshots used in the Jira exercise  
-> Screenshots are referenced in `01-jira-service-management.md` and do not require additional documentation files.
+- `docs/assets/cloud/` – contains screenshots used in the Cloud exercises
+- `docs/assets/jira/` – contains screenshots used in the Jira exercise
+> Screenshots are referenced in their respective documentation files and do not require additional standalone documentation.
 
 ---
 
