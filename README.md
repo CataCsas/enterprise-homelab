@@ -82,8 +82,15 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 ### Security Monitoring
 
 - Wazuh installed and operational on VLAN20  
-- Log ingestion validated from `/var/log/auth.log`  
+- Log ingestion validated from `/var/log/auth.log` 
 - Alert correlation and rule validation confirmed  
+
+### Cloud Exercises (Completed)
+
+- **[Lab 01 – Microsoft Entra ID: User Creation and RBAC](./cloud/01-azure-ad-users.md)**
+  - Created three users simulating different enterprise roles (Admin, Security Operator, Guest/Auditor)  
+  - Assigned roles using **least-privilege principle** and validated tenant-level MFA enforcement  
+  - Documented rationale, role assignments, and observations for portfolio review  
 
 ### Detection Case Studies (Completed)
 
