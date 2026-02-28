@@ -32,6 +32,7 @@ This repository is supported by structured documentation covering network design
 
 ### Cloud Identity & Access Management
 - [`01-azure-ad-users.md`](./cloud/01-azure-ad-users.md)
+- [`02-azure-ad-identity-hardening.md`](./cloud/02-azure-ad-identity-hardening.md)
 
 ### Network Design
 - [`ip-addressing.md`](./network/ip-addressing.md)
@@ -52,7 +53,7 @@ This repository is supported by structured documentation covering network design
 
 ### Supporting Assets
 - `docs/assets/cloud/` – contains screenshots used in the Cloud exercises
-- `docs/assets/jira/` – contains screenshots used in the Jira exercise
+- `docs/assets/jira/` – contains screenshots used in the Jira exercises
 > Screenshots are referenced in their respective documentation files and do not require additional standalone documentation.
 
 ---
