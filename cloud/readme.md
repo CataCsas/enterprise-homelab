@@ -1,17 +1,39 @@
 # Cloud Labs
 
-This folder contains structured cloud and identity exercises aligned with enterprise identity management, RBAC, and cloud security practices.
+This folder contains structured Microsoft Entra ID (Azure AD) labs focused on identity management, RBAC governance, and tenant-level security hardening.
 
 Each lab documents:
 - Objective and scope
-- Configuration steps
-- Role or permission assignments
-- Screenshots and validation
-- Observations and lessons learned
+- Identity and RBAC configuration
+- Administrative decision-making
+- Security control implementation
+- Validation through audit logs or role review
+- Observations from a governance perspective
 
-Current labs:
-1. [01-azure-ad-users.md](01-azure-ad-users.md) – Microsoft Entra ID user creation and RBAC simulation  
-2. 02-azure-ad-policies.md – Planned: Conditional access and group-based role assignment  
-3. 03-account-lifecycle.md – Planned: Identity lifecycle simulation  
+The progression follows a structured identity path:
+1. Establish identity objects and role foundations  
+2. Harden administrative and tenant-level controls  
+3. Simulate identity lifecycle management  
 
-> Maintain one Markdown file per lab. Future cloud exercises can expand this folder.
+---
+
+## Current Labs
+
+1. [01-azure-ad-users.md](01-azure-ad-users.md)  
+   **User Creation & RBAC Simulation**  
+   Establishes identity objects, role assignments, and baseline administrative structure.
+
+2. [02-azure-ad-identity-hardening.md](02-azure-ad-identity-hardening.md)  
+   **Tenant Identity Hardening**  
+   Reviews administrative posture, introduces emergency access planning, restricts default tenant behaviors, and validates changes through audit logs.
+
+3. *(Planned)* **Account Lifecycle Simulation**  
+   Simulates joiner, mover, and leaver scenarios including role adjustments, group membership changes, and account deprovisioning validation.
+
+---
+
+> Each lab is documented in a single Markdown file with supporting screenshots stored under `docs/assets/cloud/`.
+>  
+> The objective is to demonstrate practical administrative control, measurable risk reduction, and clear documentation of cloud identity decisions.
+
+---
