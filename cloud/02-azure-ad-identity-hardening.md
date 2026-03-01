@@ -1,4 +1,4 @@
-# Azure AD Identity Hardening (Free Tier)
+# Azure AD Identity Hardening
 
 ## Objective
 
