@@ -1,8 +1,13 @@
+![CompTIA Security+](https://img.shields.io/badge/-Security%2B-FF0000?style=flat&logo=CompTIA&logoColor=white)
+![Google Cybersecurity](https://img.shields.io/badge/Google-Cybersecurity-4285F4?style=flat&logo=google&logoColor=white)
+
 # Enterprise Homelab
 
 This repository documents the design and evolution of an enterprise-style home lab focused on **network segmentation, security monitoring, and SOC-aligned operational practices**.
 
 The lab simulates real-world enterprise infrastructure with an emphasis on clear architecture, controlled traffic flows, and visibility into system and network activity.
+
+Hands-on exercises demonstrate practical experience in alert analysis, administrative control validation, and operational visibility.
 
 ---
 
@@ -10,12 +15,12 @@ The lab simulates real-world enterprise infrastructure with an emphasis on clear
 
 The environment is built using:
 
-- **pfSense** as the edge firewall, inter-VLAN router, and perimeter control  
-- **Cisco Catalyst switching** for VLAN segmentation, trunking, and access-layer enforcement  
+- **Netgate SG-2100** as pfSense edge firewall, inter-VLAN router, DHCP, and perimeter control  
+- **Cisco Catalyst WS-C3560CX-8PC-S** for VLAN segmentation, trunking, and access-layer enforcement  
 - **VLAN-based segmentation** to separate users, infrastructure, IoT, and guest traffic  
 - **Wazuh SIEM (Linux-based)** for centralized log collection, alerting, and security monitoring  
 
-Core infrastructure components (pfSense, Cisco switch, SIEM) use static IP addressing to ensure stable routing, predictable firewall enforcement, and consistent log ingestion.
+Core infrastructure components are statically addressed to ensure stable routing, predictable firewall enforcement, and consistent log ingestion.
 
 The lab emphasizes **architectural decisions, security rationale, and operational discipline** aligned with SOC workflows.
 
@@ -52,8 +57,9 @@ This repository is supported by structured documentation covering network design
 - [`detection-cases/`](./security/detection-cases/)
 
 ### Supporting Assets
-- `docs/assets/cloud/` – contains screenshots used in the Cloud exercises
-- `docs/assets/jira/` – contains screenshots used in the Jira exercises
+- `docs/assets/cloud/` – screenshots used in Cloud exercises
+- `docs/assets/jira/` – screenshots used in Jira exercises
+
 > Screenshots are referenced in their respective documentation files and do not require additional standalone documentation.
 
 ---
@@ -83,27 +89,32 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 ### Security Monitoring
 
 - Wazuh installed and operational on VLAN20  
-- Log ingestion validated from `/var/log/auth.log` 
+- Log ingestion validated from `/var/log/auth.log`  
 - Alert correlation and rule validation confirmed  
 
 ### Cloud Exercises (Completed)
 
 - **[Lab 01 – Microsoft Entra ID: User Creation and RBAC](./cloud/01-azure-ad-users.md)**
-  - Created three users simulating different enterprise roles (Admin, Security Operator, Guest/Auditor)  
+  - Created three users simulating enterprise roles (Admin, Security Operator, Guest/Auditor)  
   - Assigned roles using **least-privilege principle** and validated tenant-level MFA enforcement  
   - Documented rationale, role assignments, and observations for portfolio review  
+
+- **[Lab 02 – Azure AD Identity Hardening](./cloud/02-azure-ad-identity-hardening.md)**
+  - Reviewed administrative posture and implemented emergency access planning  
+  - Restricted default tenant behaviors including app registration and group creation  
+  - Validated changes via audit logs to ensure traceability and governance
 
 ### Detection Case Studies (Completed)
 
 - **[Detection Case 01 – Failed Sudo Escalation](./security/detection-cases/01-sudo-failure.md)**
-  - Validated Rule 5503 (authentication failure)
-  - Correlated escalation to Rule 5404 (three failed sudo attempts)
+  - Validated Rule 5503 (authentication failure)  
+  - Correlated escalation to Rule 5404 (three failed sudo attempts)  
   - Documented SOC triage workflow
 
 - **[Detection Case 02 – Scripted Persistence Simulation](./security/detection-cases/02-scripted-persistence.md)**
-  - Simulated account creation and privilege escalation
-  - Validated File Integrity Monitoring (FIM) for `/etc/passwd`, `/etc/group`
-  - Detected cron-based persistence creation
+  - Simulated account creation and privilege escalation  
+  - Validated File Integrity Monitoring (FIM) for `/etc/passwd`, `/etc/group`  
+  - Detected cron-based persistence creation  
   - Captured structured `alerts.json` snapshot for reconstruction
 
 ### Operational Documentation
@@ -112,7 +123,7 @@ As the environment evolves, changes are documented with an emphasis on clarity, 
 - Firewall rule refinement recorded with remediation steps  
 - Change management and lessons learned updated  
 - **Jira Service Management lab exercise documented**  
-  - Demonstrates simulated ITSM workflow, incident triage, service requests, and investigation/resolution documentation  
+  - Simulated ITSM workflow, incident triage, service requests, and resolution  
   - See [`01-jira-service-management.md`](./operations/01-jira-service-management.md) for full details and screenshots
 
 ---
