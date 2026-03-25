@@ -27,13 +27,14 @@ The progression follows a structured identity path:
    **Tenant Identity Hardening**  
    Reviews administrative posture, introduces emergency access planning, restricts default tenant behaviors, and validates changes through audit logs.
 
-3. *(Planned)* **Account Lifecycle Simulation**  
-   Simulates joiner, mover, and leaver scenarios including role adjustments, group membership changes, and account deprovisioning validation.
+3. [03-azure-ad-account-lifecycle.md](03-azure-ad-account-lifecycle.md)  
+   **Account Lifecycle Simulation**  
+   Simulates an identity lifecycle including access request, RBAC correction, provisioning, incident handling, and access cleanup within an ITSM-driven workflow.
 
 ---
 
 > Each lab is documented in a single Markdown file with supporting screenshots stored under `docs/assets/cloud/`.
 >  
-> The objective is to demonstrate practical administrative control, measurable risk reduction, and clear documentation of cloud identity decisions.
+> The objective is to demonstrate practical administrative control, structured identity operations, and clear documentation of access decisions.
 
 ---
