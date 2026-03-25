@@ -1,4 +1,4 @@
-# Azure AD Identity Hardening
+# Lab 02 – Microsoft Entra ID: Identity Hardening
 
 ## Objective
 
