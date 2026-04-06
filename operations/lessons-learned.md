@@ -21,6 +21,10 @@ This document summarizes key insights and takeaways from the design, deployment,
 - **Endpoint and device hardening matters**  
   Restricting access and disabling unnecessary services on printers and endpoints reduced attack surface and limited lateral movement risk.
 
+- **Endpoint VLAN troubleshooting**  
+  During VLAN50 validation, an endpoint initially failed to obtain DHCP. Layer 2 troubleshooting, including MAC table inspection, port isolation, and device swapping, identified the issue as NIC offloading and VLAN features rather than switch or firewall misconfiguration. Disabling offloading and ensuring unmanaged VLAN settings restored predictable behavior.  
+  *Key takeaway: endpoint NIC behavior can interfere with VLAN-based networks, requiring validation at both endpoint and network levels.*
+
 - **Change management reduces risk**  
   Tracking configuration changes, hardware updates, and network modifications minimized misconfigurations and improved repeatability.
 
